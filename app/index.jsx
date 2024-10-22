@@ -1,17 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, Text, View, ScrollView } from "react-native";
-import { Link } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Image, Text, View, ScrollView, SafeAreaView } from "react-native";
+import { Redirect, router } from "expo-router";
 
 import { images } from "../constants";
 import CustomButton from "../components/CustomButton";
 
 export default function App() {
   return (
-    // Should be SafeAreaView but not working with nativeWind
-    <View className="bg-primary h-full">
+    <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
-        <View className="w-full h-full items-center justify-center px-4">
+        <View className="w-full  h-full items-center justify-center px-4">
           <Image
             source={images.logo}
             className="w-[130px] h-[84px]"
@@ -38,12 +36,12 @@ export default function App() {
             possibilities with Aora.
           </Text>
 
-          <CustomButton title = "Get Started"
-          handlePress={() => {}}
-          // Not being applied - Don't know why
+          <CustomButton title = "Continue with Email"
+          handlePress={() => {router.push("/sign-in")}}
           containerStyles = "w-full mt-7"/>
         </View>
       </ScrollView>
-    </View>
+      <StatusBar backgroundColor="#161622" style="light"/>
+    </SafeAreaView>
   );
 }
