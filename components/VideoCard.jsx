@@ -1,5 +1,6 @@
 import { View, Text, Image, Pressable } from "react-native";
 import React, { useState } from "react";
+import { Video, ResizeMode } from "expo-av";
 
 import { icons } from "../constants";
 
@@ -14,10 +15,10 @@ const VideoCard = ({
   const [play, setPlay] = useState(false);
 
   return (
-    <View className="flex-col items-center px-4 mb-14">
+    <View className="flex-col items-center px-4 mb-8">
       <View className="flex-row gap-3 items-start">
         <View className="justify-center items-center flex-row flex-1">
-          <View className="w-[46px] h-[46px] rounded-lg border border-secondary justify-center items-center p-0.5">
+          <View className="w-[46px] h-[46px] rounded-lg justify-center items-center p-0.5">
             <Image
               source={{ uri: avatar }}
               className="w-full h-full rounded-lg"
@@ -56,7 +57,7 @@ const VideoCard = ({
           useNativeControls
           shouldPlay
           onPlaybackStatusUpdate={(status) => {
-            if (status.didJustFinish) {
+            if (!status.isPlaying) {
               setPlay(false);
             }
           }}

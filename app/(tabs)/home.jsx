@@ -15,11 +15,13 @@ import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
 import useAppwrite from "../../lib/useAppwrite";
 
-import { getAllPosts } from "../../lib/appwrite";
+import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import VideoCard from "../../components/VideoCard";
+
 
 const Home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
+  const { data: latestPosts } = useAppwrite(getLatestPosts);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -34,12 +36,10 @@ const Home = () => {
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => (
-          <VideoCard video={item}/>
-        )}
+        renderItem={({ item }) => <VideoCard video={item} />}
         ListHeaderComponent={() => (
           <View className="mt-10 px-4 space-y-2">
-            <View className="justify-between items-start flex-row mb-6 py-8">
+            <View className="justify-between items-start flex-row py-8">
               <View>
                 <Text className="font-pmedium text-sm text-gray-100">
                   Welcome Back
@@ -54,14 +54,14 @@ const Home = () => {
                 />
               </View>
             </View>
-            <SearchInput className="mt-0" />
+            <SearchInput className="mt-1" />
 
             <View className="w-full flex-1 pt-5 mb-4">
               <Text className="text-gray-100 text-lg font-pregular mb-3">
-                Latest Videos
+                Trending Videos
               </Text>
 
-              <Trending posts={[{ id: 1 }, { id: 2 }, { id: 3 }] ?? []} />
+              <Trending posts={latestPosts ?? []} />
             </View>
           </View>
         )}
