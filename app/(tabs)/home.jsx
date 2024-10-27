@@ -5,9 +5,8 @@ import {
   FlatList,
   Image,
   RefreshControl,
-  Alert,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { images } from "../../constants";
 import SearchInput from "../../components/SearchInput";
@@ -17,7 +16,6 @@ import useAppwrite from "../../lib/useAppwrite";
 
 import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import VideoCard from "../../components/VideoCard";
-
 
 const Home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
