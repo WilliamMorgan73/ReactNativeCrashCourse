@@ -14,12 +14,16 @@ import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
 import useAppwrite from "../../lib/useAppwrite";
 
+import { useGlobalContext } from "../../context/GlobalProvider";
+
 import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import VideoCard from "../../components/VideoCard";
 
 const Home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
   const { data: latestPosts } = useAppwrite(getLatestPosts);
+
+  const { user, setUser, setIsLogged } = useGlobalContext();
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -40,9 +44,11 @@ const Home = () => {
             <View className="justify-between items-start flex-row py-8">
               <View>
                 <Text className="font-pmedium text-sm text-gray-100">
-                  Welcome Back
+                  Welcome Back,
                 </Text>
-                <Text className="text-2xl font-psemibold text-white">User</Text>
+                <Text className="text-2xl font-psemibold text-white">
+                  {user?.username}
+                </Text>
               </View>
               <View className="mt-1.5">
                 <Image

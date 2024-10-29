@@ -14,7 +14,7 @@ import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import { getCurrentUser, signIn } from "../../lib/appwrite";
 
-import { useGlobalContext } from "../../context/globalProvider";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 
 const SignIn = () => {
