@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Video, ResizeMode } from "expo-av";
 
 import { icons } from "../constants";
+import { savePost, unsavePost } from "../lib/appwrite";
 
 const VideoCard = ({
   video: {
@@ -10,9 +11,26 @@ const VideoCard = ({
     thumbnail,
     video,
     creator: { username, avatar },
+    videoId,
   },
+  userId,
 }) => {
   const [play, setPlay] = useState(false);
+
+  const [bookmark, setBookmark] = useState(false);
+
+  const toggleBookmark = async () => {
+    try {
+      if (bookmark) {
+        await unsavePost(userId, videoId);
+      } else {
+        await savePost(userId, videoId);
+      }
+      setBookmark(!bookmark);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <View className="flex-col items-center px-4 mb-8">
@@ -41,11 +59,14 @@ const VideoCard = ({
           </View>
         </View>
         <View className="pt-2">
-          <Image
-            source={icons.menu}
-            className="w-5 h-5"
-            resizeMode="contain"
-          ></Image>
+          <Pressable onPress={toggleBookmark}>
+            <Image
+              source={icons.bookmark}
+              className="w-5 h-5"
+              resizeMode="contain"
+              tintColor={bookmark ? "#FF9C01" : "#FFFFFF"}
+            />
+          </Pressable>
         </View>
       </View>
 
